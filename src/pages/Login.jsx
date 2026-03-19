@@ -34,8 +34,8 @@ export default function Login() {
   };
 
   const handleOAuthLogin = (provider) => {
-    // Redirect to backend OAuth endpoint
-    window.location.href = `http://localhost:5000/api/auth/${provider}`;
+    // Use the same base URL as API calls
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/${provider}`;
   };
 
   return (
