@@ -1,25 +1,21 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import AIChatAssistant from "./AIChatAssistant"; // 👈 import the new component
+import AIChatAssistant from "./AIChatAssistant";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user")) || { username: "Alex Kumar" };
-  const initials =
-    user?.username?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
+  const initials = user?.username?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
 
-    useEffect(() => {
+  useEffect(() => {
     const handleOpenChat = () => {
       setChatOpen(true);
-      // Optionally also open the sidebar if it's closed
       if (!isOpen) setIsOpen(true);
     };
-    window.addEventListener('openAIChat', handleOpenChat);
-    return () => window.removeEventListener('openAIChat', handleOpenChat);
+    window.addEventListener("openAIChat", handleOpenChat);
+    return () => window.removeEventListener("openAIChat", handleOpenChat);
   }, [isOpen]);
-
-
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -29,12 +25,11 @@ export default function Sidebar() {
     { path: "/interview/setup", label: "Interview Tests", icon: "M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
     { path: "/learning", label: "Learning Hub", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" },
     { path: "/latest-jobs", label: "Latest Jobs", icon: "M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
-    // The AI Career Assistant nav item is removed – it's now a separate component below
   ];
 
   return (
     <aside
-      className={`flex-shrink-0 border-r border-gray-700/50 flex flex-col bg-gray-900/95 backdrop-blur-xl transition-all duration-300 ${
+      className={`flex-shrink-0 border-r border-gray-700/50 flex flex-col bg-gray-900/95 backdrop-blur-xl transition-all duration-300 ease-in-out ${
         isOpen ? "w-72" : "w-20"
       }`}
     >
@@ -42,6 +37,7 @@ export default function Sidebar() {
       <div className="p-4 pb-8 border-b border-gray-700/50 flex items-center justify-between">
         {isOpen ? (
           <div className="flex items-center gap-3">
+            {/* Custom Logo */}
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/20 flex-shrink-0">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -54,6 +50,7 @@ export default function Sidebar() {
           </div>
         ) : (
           <div className="w-full flex justify-center">
+            {/* Compact logo when closed */}
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -64,13 +61,9 @@ export default function Sidebar() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-2 rounded-lg hover:bg-white/5 transition-colors text-gray-400 hover:text-white"
+          aria-label={isOpen ? "Collapse sidebar" : "Expand sidebar"}
         >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {isOpen ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
             ) : (
@@ -101,11 +94,13 @@ export default function Sidebar() {
               <>
                 <span className="text-sm font-medium flex-1">{item.label}</span>
                 {item.badge && (
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
-                    item.badge === "AI" 
-                      ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white" 
-                      : "bg-red-500 text-white"
-                  }`}>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
+                      item.badge === "AI"
+                        ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+                        : "bg-red-500 text-white"
+                    }`}
+                  >
                     {item.badge}
                   </span>
                 )}
@@ -117,7 +112,7 @@ export default function Sidebar() {
 
       {/* AI Chat Assistant */}
       {isOpen && (
-        <div className="mb-8 px-4">
+        <div className="mb-4 px-4">
           <AIChatAssistant />
         </div>
       )}
