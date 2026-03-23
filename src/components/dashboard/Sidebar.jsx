@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import AIChatAssistant from "./AIChatAssistant";
-import logo from "/src/assets/logo.png"; // Adjust the path as needed
+import logo from "/src/assets/logo.svg"; // Adjust the path as needed
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
