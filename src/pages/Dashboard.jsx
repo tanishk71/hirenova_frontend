@@ -11,7 +11,7 @@ export default function Dashboard() {
       <Kpis />
       <RecommendedJobs />
       <BottomSection />
-      <div className="h-6" />
+    <div className="h-6" />
     </div>
   );
 }
