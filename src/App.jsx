@@ -23,14 +23,15 @@ import Layout from "./layouts/Layout";
 export default function App() {
   return (
     <Routes>
+      {/* Public routes */}
       <Route path="/" element={<Landing />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify-email" element={<VerifyOtp />} />
-      <Route path="/jobs" element={<JobSearch />} />
       <Route path="/oauth-redirect" element={<OAuthRedirect />} />
 
-            <Route element={<ProtectedRoute />}>
+      {/* Protected routes with sidebar layout */}
+      <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/jobs" element={<JobSearch />} />
