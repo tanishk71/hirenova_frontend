@@ -36,7 +36,6 @@ export default function Sidebar() {
     >
       {/* Logo and Toggle Section */}
       <div className="p-4 pb-8 border-b border-gray-700/50 flex items-center justify-between">
-        // ... inside the logo div
         {isOpen ? (
           <div className="flex items-center gap-3">
             {/* Custom Logo Image */}
