@@ -35,15 +35,14 @@ export default function Sidebar() {
       }`}
     >
       {/* Logo and Toggle Section */}
+      {/* Logo and Toggle Section */}
       <div className="p-4 pb-8 border-b border-gray-700/50 flex items-center justify-between">
         {isOpen ? (
           <div className="flex items-center gap-3">
-            {/* Custom Logo Image */}
-            <img
-              src="/src/assets/logo.png" // or "/logo.png" if placed in public folder
-              alt="HireNova"
-              className="w-10 h-10 object-contain rounded-xl"
-            />
+            {/* Use a simple text logo until you have the image file */}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
+              <span className="text-white font-bold text-xl">HN</span>
+            </div>
             <div>
               <h1 className="text-xl font-bold text-white">HireNova</h1>
               <p className="text-xs text-gray-400">AI Career Platform</p>
@@ -51,11 +50,9 @@ export default function Sidebar() {
           </div>
         ) : (
           <div className="w-full flex justify-center">
-            <img
-              src = {logo}
-              alt="HireNova"
-              className="w-10 h-10 object-contain rounded-xl"
-            />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
+              <span className="text-white font-bold text-xl">HN</span>
+            </div>
           </div>
         )}
         <button
