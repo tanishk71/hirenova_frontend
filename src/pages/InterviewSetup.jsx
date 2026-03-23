@@ -40,6 +40,16 @@ export default function InterviewSetup() {
   return (
     <div className="min-h-screen p-6 md:p-10 text-gray-100 bg-gradient-to-br from-[#0B1120] via-[#1A1F36] to-[#111827]">
       <div className="max-w-3xl mx-auto">
+        {/* Back button */}
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 transition-colors mb-6"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Dashboard
+        </button>
 
         <h1 className="text-4xl font-bold mb-8 text-center">Interview Test Setup</h1>
         <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8">

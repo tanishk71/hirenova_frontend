@@ -45,6 +45,17 @@ export default function LatestJobs() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0B1120] via-[#1A1F36] to-[#111827] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Back button */}
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 transition-colors mb-6"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Dashboard
+        </button>
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-4">
@@ -95,7 +106,6 @@ export default function LatestJobs() {
                   key={job.id}
                   className="group bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-xl p-6 hover:border-indigo-500/50 hover:shadow-xl transition-all duration-300"
                 >
-                  {/* Header with logo and title */}
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-gray-600 flex items-center justify-center text-2xl font-bold text-indigo-400 flex-shrink-0">
                       {job.logo ? (
@@ -124,7 +134,6 @@ export default function LatestJobs() {
                     </div>
                   </div>
 
-                  {/* Badges: type, salary, posted */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {job.type && (
                       <span className="px-3 py-1 rounded-full text-xs bg-gray-700/50 text-gray-300 border border-gray-600 flex items-center gap-1">
@@ -152,12 +161,10 @@ export default function LatestJobs() {
                     )}
                   </div>
 
-                  {/* Description */}
                   {job.description && (
                     <p className="text-gray-400 text-sm mb-4 line-clamp-3">{job.description}</p>
                   )}
 
-                  {/* Apply button */}
                   <a
                     href={job.applyLink || job.url}
                     target="_blank"

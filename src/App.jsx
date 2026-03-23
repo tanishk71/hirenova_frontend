@@ -18,7 +18,6 @@ import CourseDetails from "./pages/CourseDetails";
 import SavedJobs from "./pages/SavedJobs";
 import LatestJobs from "./pages/LatestJobs";  
 import OAuthRedirect from "./pages/OAuthRedirect";
-import Layout from "./layouts/Layout";  
 
 export default function App() {
   return (
@@ -30,24 +29,20 @@ export default function App() {
       <Route path="/verify-email" element={<VerifyOtp />} />
       <Route path="/oauth-redirect" element={<OAuthRedirect />} />
 
-      {/* Protected routes with sidebar layout */}
-      <Route element={<ProtectedRoute />}>
-        <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/jobs" element={<JobSearch />} />
-          <Route path="/dashboard/ats" element={<ResumeATS />} />
-          <Route path="/resume-history" element={<ResumeHistory />} />
-          <Route path="/interview/setup" element={<InterviewSetup />} />
-          <Route path="/interview/test/:testId" element={<InterviewTest />} />
-          <Route path="/interview/result" element={<InterviewResult />} />
-          <Route path="/learning" element={<LearningHub />} />
-          <Route path="/certificates" element={<Certificates />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/learning/:courseId" element={<CourseDetails />} />
-          <Route path="/saved-jobs" element={<SavedJobs />} />
-          <Route path="/latest-jobs" element={<LatestJobs />} />
-        </Route>
-      </Route>
+      {/* Protected routes (each with its own back button) */}
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/jobs" element={<ProtectedRoute><JobSearch /></ProtectedRoute>} />
+      <Route path="/dashboard/ats" element={<ProtectedRoute><ResumeATS /></ProtectedRoute>} />
+      <Route path="/resume-history" element={<ProtectedRoute><ResumeHistory /></ProtectedRoute>} />
+      <Route path="/interview/setup" element={<ProtectedRoute><InterviewSetup /></ProtectedRoute>} />
+      <Route path="/interview/test/:testId" element={<ProtectedRoute><InterviewTest /></ProtectedRoute>} />
+      <Route path="/interview/result" element={<ProtectedRoute><InterviewResult /></ProtectedRoute>} />
+      <Route path="/learning" element={<ProtectedRoute><LearningHub /></ProtectedRoute>} />
+      <Route path="/certificates" element={<ProtectedRoute><Certificates /></ProtectedRoute>} />
+      <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+      <Route path="/learning/:courseId" element={<ProtectedRoute><CourseDetails /></ProtectedRoute>} />
+      <Route path="/saved-jobs" element={<ProtectedRoute><SavedJobs /></ProtectedRoute>} />
+      <Route path="/latest-jobs" element={<ProtectedRoute><LatestJobs /></ProtectedRoute>} />
     </Routes>
   );
 }

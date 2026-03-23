@@ -1,22 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import AIChatAssistant from "./AIChatAssistant";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
-  const [chatOpen, setChatOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user")) || { username: "Alex Kumar" };
-  const initials =
-    user?.username?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
-
-  useEffect(() => {
-    const handleOpenChat = () => {
-      setChatOpen(true);
-      if (!isOpen) setIsOpen(true);
-    };
-    window.addEventListener("openAIChat", handleOpenChat);
-    return () => window.removeEventListener("openAIChat", handleOpenChat);
-  }, [isOpen]);
+  const initials = user?.username?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -29,18 +18,15 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside
-      className={`flex-shrink-0 border-r border-gray-700/50 flex flex-col bg-gray-900/95 backdrop-blur-xl transition-all duration-300 ease-in-out ${
-        isOpen ? "w-72" : "w-20"
-      }`}
-    >
+    <aside className={`flex-shrink-0 border-r border-gray-700/50 flex flex-col bg-gray-900/95 backdrop-blur-xl transition-all duration-300 ${isOpen ? "w-72" : "w-20"}`}>
       {/* Logo and Toggle Section */}
       <div className="p-4 pb-8 border-b border-gray-700/50 flex items-center justify-between">
         {isOpen ? (
           <div className="flex items-center gap-3">
-            {/* Simple text logo – reliable and works without image files */}
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
-              <span className="text-white font-bold text-xl">HN</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
             </div>
             <div>
               <h1 className="text-xl font-bold text-white">HireNova</h1>
@@ -49,15 +35,16 @@ export default function Sidebar() {
           </div>
         ) : (
           <div className="w-full flex justify-center">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
-              <span className="text-white font-bold text-xl">HN</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
             </div>
           </div>
         )}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-2 rounded-lg hover:bg-white/5 transition-colors text-gray-400 hover:text-white"
-          aria-label={isOpen ? "Collapse sidebar" : "Expand sidebar"}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {isOpen ? (
@@ -86,32 +73,13 @@ export default function Sidebar() {
             <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon} />
             </svg>
-            {isOpen && (
-              <>
-                <span className="text-sm font-medium flex-1">{item.label}</span>
-                {item.badge && (
-                  <span
-                    className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
-                      item.badge === "AI"
-                        ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
-                        : "bg-red-500 text-white"
-                    }`}
-                  >
-                    {item.badge}
-                  </span>
-                )}
-              </>
-            )}
+            {isOpen && <span className="text-sm font-medium flex-1">{item.label}</span>}
           </NavLink>
         ))}
       </nav>
 
       {/* AI Chat Assistant */}
-      {isOpen && (
-        <div className="mb-4 px-4">
-          <AIChatAssistant />
-        </div>
-      )}
+      {isOpen && <AIChatAssistant />}
 
       {/* User Profile */}
       <div className="p-6 pt-4 border-t border-gray-700/50">

@@ -16,7 +16,7 @@ export default function InterviewTest() {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
-          handleSubmit(true); // auto-submit when timer expires
+          handleSubmit(true);
           return 0;
         }
         return prev - 1;
@@ -28,7 +28,6 @@ export default function InterviewTest() {
 
   const handleSelect = (questionIndex, selectedAnswer) => {
     setAnswers((prev) => {
-      // Remove existing answer for this question if any
       const filtered = prev.filter((a) => a.questionIndex !== questionIndex);
       return [...filtered, { questionIndex, selectedAnswer }];
     });
@@ -56,7 +55,6 @@ export default function InterviewTest() {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  // Check if a question has been answered
   const isAnswered = (questionIndex) => {
     return answers.some((a) => a.questionIndex === questionIndex);
   };
@@ -64,6 +62,16 @@ export default function InterviewTest() {
   return (
     <div className="min-h-screen p-4 md:p-8 text-gray-100 bg-gradient-to-br from-[#0B1120] via-[#1A1F36] to-[#111827]">
       <div className="max-w-4xl mx-auto">
+        {/* Back button */}
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 transition-colors mb-6"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Dashboard
+        </button>
 
         {/* Sticky header with timer and progress */}
         <div className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-4 mb-8 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -81,7 +89,6 @@ export default function InterviewTest() {
             </div>
           </div>
 
-          {/* Timer with visual urgency */}
           <div className={`flex items-center gap-3 px-4 py-2 rounded-xl ${
             timeLeft < 60 ? 'bg-red-900/30 border border-red-800' : 'bg-gray-800/60 border border-gray-700'
           }`}>
@@ -112,7 +119,6 @@ export default function InterviewTest() {
                       : 'border-gray-700/50 hover:border-gray-600'
                   }`}
                 >
-                  {/* Question header with status */}
                   <div className="flex items-start gap-3 mb-4">
                     <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                       answered ? 'bg-indigo-600/20 text-indigo-400' : 'bg-gray-700/50 text-gray-400'
@@ -134,7 +140,6 @@ export default function InterviewTest() {
                     </div>
                   </div>
 
-                  {/* Options grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-10">
                     {q.options.map((opt, i) => {
                       const isSelected = answers.some(
@@ -176,7 +181,7 @@ export default function InterviewTest() {
           </div>
         )}
 
-        {/* Submit button with warning if unanswered */}
+        {/* Submit button */}
         {questions.length > 0 && (
           <div className="mt-10 sticky bottom-4">
             <div className="bg-gray-800/80 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-4 shadow-2xl">
