@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import AIChatAssistant from "./AIChatAssistant";
-import logo from "/src/assets/logo.svg"; // Adjust the path as needed
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user")) || { username: "Alex Kumar" };
-  const initials = user?.username?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
+  const initials =
+    user?.username?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
 
   useEffect(() => {
     const handleOpenChat = () => {
@@ -35,11 +35,10 @@ export default function Sidebar() {
       }`}
     >
       {/* Logo and Toggle Section */}
-      {/* Logo and Toggle Section */}
       <div className="p-4 pb-8 border-b border-gray-700/50 flex items-center justify-between">
         {isOpen ? (
           <div className="flex items-center gap-3">
-            {/* Use a simple text logo until you have the image file */}
+            {/* Simple text logo – reliable and works without image files */}
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
               <span className="text-white font-bold text-xl">HN</span>
             </div>
