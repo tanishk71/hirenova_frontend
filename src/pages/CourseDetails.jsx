@@ -124,15 +124,6 @@ export default function CourseDetails() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#0B1120] via-[#1A1F36] to-[#111827] text-white">
         <div className="max-w-7xl mx-auto px-6 py-8">
-          <button
-            onClick={() => navigate("/learning")}
-            className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 mb-6"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back to Learning Hub
-          </button>
           <div className="bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-xl p-8 text-center">
             <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
             <p className="text-gray-400 mb-6">{course.description}</p>
@@ -158,17 +149,6 @@ export default function CourseDetails() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0B1120] via-[#1A1F36] to-[#111827] text-white">
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Back button */}
-        <button
-          onClick={() => navigate("/learning")}
-          className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 mb-6"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back to Learning Hub
-        </button>
-
         {/* Course header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{course.title}</h1>
