@@ -5,8 +5,9 @@ import AIChatAssistant from "./AIChatAssistant";
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user")) || { username: "Alex Kumar" };
-  const initials = user?.username?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const username = user?.username || "Alex Kumar";
+  const initials = username.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -18,7 +19,6 @@ export default function Sidebar() {
     { path: "/latest-jobs", label: "Latest Jobs", icon: "M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
   ];
 
-  // Close drawer on Escape key
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") setChatDrawerOpen(false);
@@ -27,7 +27,6 @@ export default function Sidebar() {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  // Prevent body scroll when drawer open
   useEffect(() => {
     if (chatDrawerOpen) {
       document.body.style.overflow = "hidden";
@@ -41,13 +40,11 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Main Sidebar */}
       <aside
         className={`flex-shrink-0 border-r border-gray-700/50 flex flex-col bg-gray-900/95 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           isOpen ? "w-72" : "w-20"
         }`}
       >
-        {/* Logo and Toggle Section with enhanced animation */}
         <div className="p-4 pb-8 border-b border-gray-700/50 flex items-center justify-between relative">
           <div
             className={`overflow-hidden transition-all duration-500 ${
@@ -97,24 +94,23 @@ export default function Sidebar() {
           </button>
         </div>
 
-        {/* Navigation with inside-out hover movement */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700">
           {navItems.map((item, idx) => (
             <NavLink
               key={item.label}
               to={item.path}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden ${
+              className={(navProps) => {
+                const isActive = navProps && navProps.isActive;
+                return `flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden ${
                   isActive
                     ? "bg-gradient-to-r from-indigo-600/20 to-purple-600/20 text-indigo-300 border border-indigo-500/30 shadow-[0_0_12px_rgba(99,102,241,0.15)]"
                     : "text-gray-400 hover:bg-white/5 hover:text-white"
-                }`
-              }
+                }`;
+              }}
               style={{
                 transitionDelay: isOpen ? `${idx * 30}ms` : "0ms",
               }}
             >
-              {/* Inside-out movement effect: icon slides out on hover */}
               <svg
                 className="w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:scale-110"
                 fill="none"
@@ -128,22 +124,16 @@ export default function Sidebar() {
                   {item.label}
                 </span>
               )}
-              {/* Active indicator glow */}
-              {isActive && (
-                <div className="absolute inset-0 -z-10 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl blur-md" />
-              )}
             </NavLink>
           ))}
         </nav>
 
-        {/* AI Chat Assistant Section - Full when open, hidden when closed */}
         {isOpen && (
           <div className="px-3 py-2 border-t border-gray-700/50 animate-fadeIn">
             <AIChatAssistant />
           </div>
         )}
 
-        {/* User Profile & Actions - Enhanced for both states */}
         <div className="p-4 pt-4 border-t border-gray-700/50">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-semibold text-sm text-white shadow-lg flex-shrink-0 transition-all duration-300 hover:scale-105">
@@ -151,16 +141,14 @@ export default function Sidebar() {
             </div>
             {isOpen && (
               <div className="flex-1 min-w-0 transition-all duration-500">
-                <p className="text-sm font-medium text-white truncate">{user.username}</p>
+                <p className="text-sm font-medium text-white truncate">{username}</p>
                 <p className="text-xs text-gray-400">Ready to advance</p>
               </div>
             )}
           </div>
 
-          {/* Action Buttons Row - For collapsed state: AI Chat + Logout icons | For open state: only Logout button */}
           {!isOpen ? (
             <div className="flex flex-col gap-3">
-              {/* AI Chat Icon (Collapsed) */}
               <button
                 onClick={() => setChatDrawerOpen(true)}
                 className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 hover:text-indigo-300 transition-all duration-300 hover:scale-105 active:scale-95 group"
@@ -182,7 +170,6 @@ export default function Sidebar() {
                 </svg>
               </button>
 
-              {/* Logout Icon (Collapsed) */}
               <button
                 onClick={() => {
                   localStorage.removeItem("token");
@@ -209,7 +196,6 @@ export default function Sidebar() {
               </button>
             </div>
           ) : (
-            // Expanded state: full Logout button
             <button
               onClick={() => {
                 localStorage.removeItem("token");
@@ -237,20 +223,16 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Chat Drawer - Slides in from right when sidebar collapsed & chat icon clicked */}
       {chatDrawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
-          {/* Backdrop with fade animation */}
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn"
             onClick={() => setChatDrawerOpen(false)}
           />
-          {/* Drawer panel */}
           <div
             className="relative w-full max-w-md h-full bg-gray-900/95 backdrop-blur-xl border-l border-gray-700/50 shadow-2xl animate-slideInRight"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Drawer Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-700/50">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
@@ -270,7 +252,6 @@ export default function Sidebar() {
                 </svg>
               </button>
             </div>
-            {/* Chat Content */}
             <div className="h-[calc(100%-4rem)] overflow-y-auto">
               <AIChatAssistant />
             </div>
@@ -278,7 +259,6 @@ export default function Sidebar() {
         </div>
       )}
 
-      {/* Custom keyframes for animations - add to global CSS or use Tailwind config */}
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; }
@@ -301,7 +281,6 @@ export default function Sidebar() {
         .animate-pulse-slow {
           animation: pulse-slow 3s infinite;
         }
-        /* Custom scrollbar for webkit */
         .scrollbar-thin::-webkit-scrollbar {
           width: 4px;
         }
