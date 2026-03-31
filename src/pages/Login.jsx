@@ -10,6 +10,18 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // Rocket logo SVG (same as in Sidebar)
+  const LogoIcon = () => (
+    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  );
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
@@ -34,7 +46,6 @@ export default function Login() {
   };
 
   const handleOAuthLogin = (provider) => {
-    // Use the same base URL as API calls
     window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/${provider}`;
   };
 
@@ -51,7 +62,7 @@ export default function Login() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 group">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-600/30 group-hover:scale-110 transition-transform">
-              H
+              <LogoIcon />
             </div>
             <span className="text-2xl font-bold text-white">HireNova</span>
           </Link>
