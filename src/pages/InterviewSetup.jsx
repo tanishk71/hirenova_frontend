@@ -40,7 +40,8 @@ export default function InterviewSetup() {
   return (
   <div className="max-w-7xl mx-auto px-6 py-8">
     <div className="mb-8">
-      <h1 className="text-3xl font-bold">Learning Hub</h1>
+      <h1 className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 to-purple-200">
+        Interview Test Setup</h1>
     </div>
     <div className="bg-gray-800/40 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8">
       <form onSubmit={handleStart} className="space-y-6">
