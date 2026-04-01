@@ -13,8 +13,6 @@ import InterviewSetup from "./pages/InterviewSetup";
 import InterviewTest from "./pages/InterviewTest";
 import InterviewResult from "./pages/InterviewResult";
 import LearningHub from "./pages/LearningHub";
-import Certificates from "./pages/Certificates";
-import Notifications from "./pages/Notifications";
 import CourseDetails from "./pages/CourseDetails";
 import SavedJobs from "./pages/SavedJobs";
 import LatestJobs from "./pages/LatestJobs";  
