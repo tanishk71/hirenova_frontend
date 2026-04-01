@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MainLayout from "./components/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -30,19 +31,19 @@ export default function App() {
       <Route path="/oauth-redirect" element={<OAuthRedirect />} />
 
       {/* Protected routes (each with its own back button) */}
-      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/jobs" element={<ProtectedRoute><JobSearch /></ProtectedRoute>} />
-      <Route path="/dashboard/ats" element={<ProtectedRoute><ResumeATS /></ProtectedRoute>} />
-      <Route path="/resume-history" element={<ProtectedRoute><ResumeHistory /></ProtectedRoute>} />
-      <Route path="/interview/setup" element={<ProtectedRoute><InterviewSetup /></ProtectedRoute>} />
+      <Route path="/saved-jobs" element={<ProtectedRoute><SavedJobs /></ProtectedRoute>} />
       <Route path="/interview/test/:testId" element={<ProtectedRoute><InterviewTest /></ProtectedRoute>} />
       <Route path="/interview/result" element={<ProtectedRoute><InterviewResult /></ProtectedRoute>} />
-      <Route path="/learning" element={<ProtectedRoute><LearningHub /></ProtectedRoute>} />
-      <Route path="/certificates" element={<ProtectedRoute><Certificates /></ProtectedRoute>} />
-      <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-      <Route path="/learning/:courseId" element={<ProtectedRoute><CourseDetails /></ProtectedRoute>} />
-      <Route path="/saved-jobs" element={<ProtectedRoute><SavedJobs /></ProtectedRoute>} />
-      <Route path="/latest-jobs" element={<ProtectedRoute><LatestJobs /></ProtectedRoute>} />
+      <Route element={<MainLayout />}>
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/dashboard/ats" element={<ProtectedRoute><ResumeATS /></ProtectedRoute>} />
+        <Route path="/resume-history" element={<ProtectedRoute><ResumeHistory /></ProtectedRoute>} />
+        <Route path="/interview/setup" element={<ProtectedRoute><InterviewSetup /></ProtectedRoute>} />
+        <Route path="/learning" element={<ProtectedRoute><LearningHub /></ProtectedRoute>} />
+        <Route path="/learning/:courseId" element={<ProtectedRoute><CourseDetails /></ProtectedRoute>} />
+        <Route path="/latest-jobs" element={<ProtectedRoute><LatestJobs /></ProtectedRoute>} />
+      </Route>
     </Routes>
   );
 }
