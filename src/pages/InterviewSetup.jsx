@@ -49,18 +49,19 @@ export default function InterviewSetup() {
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">Test Type</label>
           <div className="flex gap-4">
-            <label className="flex items-center gap-2 text-white">
+            <label className="flex items-center gap-2" color="white">
               <input
                 type="radio"
                 name="type"
-                value="aptitude"
-                checked={type === "aptitude"}
+                value="technical"
+                checked={type === "technical"}
                 onChange={(e) => setType(e.target.value)}
                 className="text-indigo-600"
+               
               />
               <span>Technical</span>
             </label>
-            <label className="flex items-center gap-2 text-white">
+            <label className="flex items-center gap-2" >
               <input
                 type="radio"
                 name="type"
@@ -68,6 +69,7 @@ export default function InterviewSetup() {
                 checked={type === "aptitude"}
                 onChange={(e) => setType(e.target.value)}
                 className="text-indigo-600"
+                
               />
               <span>Aptitude</span>
             </label>
