@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import AIChatAssistant from "./AIChatAssistant";
 
-export default function Sidebar() {
+export default function Sidebar({ alwaysExpanded = false }) {
   const [isOpen, setIsOpen] = useState(true);
   const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const username = user?.username || "Alex Kumar";
   const initials = username.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "AK";
+
+  // Override isOpen when alwaysExpanded is true
+  const expanded = alwaysExpanded ? true : isOpen;
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -38,7 +41,6 @@ export default function Sidebar() {
     };
   }, [chatDrawerOpen]);
 
-  // New rocket logo SVG
   const LogoIcon = () => (
     <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -54,16 +56,16 @@ export default function Sidebar() {
     <>
       <aside
         className={`flex-shrink-0 border-r border-gray-700/50 flex flex-col bg-gray-900/95 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-          isOpen ? "w-72" : "w-20"
+          expanded ? "w-72" : "w-20"
         }`}
       >
         <div className="p-4 pb-8 border-b border-gray-700/50 flex items-center justify-between relative">
           <div
             className={`overflow-hidden transition-all duration-500 ${
-              isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 w-0"
+              expanded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 w-0"
             }`}
           >
-            {isOpen && (
+            {expanded && (
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/20 animate-pulse-slow">
                   <LogoIcon />
@@ -75,31 +77,33 @@ export default function Sidebar() {
               </div>
             )}
           </div>
-          {!isOpen && (
+          {!expanded && (
             <div className="absolute left-1/2 -translate-x-1/2">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
                 <LogoIcon />
               </div>
             </div>
           )}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-lg hover:bg-white/10 transition-all duration-300 hover:scale-110 active:scale-95 text-gray-400 hover:text-white z-10"
-            aria-label={isOpen ? "Collapse sidebar" : "Expand sidebar"}
-          >
-            <svg
-              className={`w-5 h-5 transition-transform duration-500 ease-out ${isOpen ? "rotate-0" : "rotate-180"}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          {!alwaysExpanded && (
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg hover:bg-white/10 transition-all duration-300 hover:scale-110 active:scale-95 text-gray-400 hover:text-white z-10"
+              aria-label={isOpen ? "Collapse sidebar" : "Expand sidebar"}
             >
-              {isOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-              )}
-            </svg>
-          </button>
+              <svg
+                className={`w-5 h-5 transition-transform duration-500 ease-out ${isOpen ? "rotate-0" : "rotate-180"}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                )}
+              </svg>
+            </button>
+          )}
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700">
@@ -116,7 +120,7 @@ export default function Sidebar() {
                 }`;
               }}
               style={{
-                transitionDelay: isOpen ? `${idx * 30}ms` : "0ms",
+                transitionDelay: expanded ? `${idx * 30}ms` : "0ms",
               }}
             >
               <svg
@@ -127,7 +131,7 @@ export default function Sidebar() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon} />
               </svg>
-              {isOpen && (
+              {expanded && (
                 <span className="text-sm font-medium flex-1 transition-all duration-300 group-hover:translate-x-1">
                   {item.label}
                 </span>
@@ -136,7 +140,7 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {isOpen && (
+        {expanded && (
           <div className="px-3 py-2 border-t border-gray-700/50 animate-fadeIn">
             <AIChatAssistant />
           </div>
@@ -147,7 +151,7 @@ export default function Sidebar() {
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-semibold text-sm text-white shadow-lg flex-shrink-0 transition-all duration-300 hover:scale-105">
               {initials}
             </div>
-            {isOpen && (
+            {expanded && (
               <div className="flex-1 min-w-0 transition-all duration-500">
                 <p className="text-sm font-medium text-white truncate">{username}</p>
                 <p className="text-xs text-gray-400">Ready to advance</p>
@@ -155,7 +159,7 @@ export default function Sidebar() {
             )}
           </div>
 
-          {!isOpen ? (
+          {!expanded ? (
             <div className="flex flex-col gap-3">
               <button
                 onClick={() => setChatDrawerOpen(true)}
