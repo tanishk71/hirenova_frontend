@@ -165,6 +165,7 @@ export default function Sidebar({ alwaysExpanded = false }) {
       </aside>
 
       {/* Chat Drawer (only opens on demand, no duplicate AIChatAssistant in sidebar) */}
+      {/* Chat Drawer */}
       {chatDrawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn" onClick={() => setChatDrawerOpen(false)} />
@@ -195,7 +196,8 @@ export default function Sidebar({ alwaysExpanded = false }) {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto">
-              <AIChatAssistant />
+              {/* ✅ Pass initialOpen={true} to make chat visible immediately */}
+              <AIChatAssistant initialOpen={true} />
             </div>
           </div>
         </div>
