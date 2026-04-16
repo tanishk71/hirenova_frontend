@@ -214,33 +214,7 @@ export default function BottomSection() {
             </span>
           </button>
         </div>
-
-        {/* AI Assistant Card */}
-        {/* AI Assistant Card */}
-          <button
-            onClick={() => {
-              window.dispatchEvent(new CustomEvent('openAIChat'));
-            }}
-            className="mt-6 w-full p-5 rounded-xl bg-gradient-to-br from-indigo-600/10 to-purple-600/10 border border-indigo-500/30 hover:border-indigo-500/50 transition-all cursor-pointer group text-left"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                <span className="text-white text-sm font-bold">AI</span>
-              </div>
-              <div>
-                <span className="font-medium text-sm text-white">AI Career Assistant</span>
-                <p className="text-gray-400 text-xs mt-0.5">Available 24/7</p>
-              </div>
-            </div>
-            <p className="text-gray-300 text-xs leading-relaxed">
-              Need help? Ask me anything about your job search, resume optimization, or interview prep!
-            </p>
-            <div className="mt-3 flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              <span className="text-green-400 text-xs">Online</span>
-            </div>
-          </button>
-        </div>
+      </div>
     </section>
   );
 }
