@@ -11,7 +11,7 @@ export default function Sidebar({ alwaysExpanded = false }) {
 
   const expanded = alwaysExpanded ? true : isOpen;
 
-  // Store original body overflow value
+  // Lock body scroll when drawer is open
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     if (chatDrawerOpen) {
@@ -118,7 +118,19 @@ export default function Sidebar({ alwaysExpanded = false }) {
           ))}
         </nav>
 
-        {/* Chat button in collapsed mode */}
+        {/* AI Chat Assistant - in expanded mode, show full component */}
+        {expanded && (
+          <div className="border-t border-gray-700/50 pt-4 mt-2">
+            <div className="px-3 pb-2">
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">AI Assistant</h3>
+            </div>
+            <div className="px-3 pb-4">
+              <AIChatAssistant initialOpen={true} />
+            </div>
+          </div>
+        )}
+
+        {/* In collapsed mode, show a chat button that opens a drawer */}
         {!expanded && (
           <div className="px-3 py-2">
             <button
@@ -164,7 +176,7 @@ export default function Sidebar({ alwaysExpanded = false }) {
         </div>
       </aside>
 
-      {/* Chat Drawer */}
+      {/* Chat Drawer (only appears when collapsed sidebar button is clicked) */}
       {chatDrawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn" onClick={() => setChatDrawerOpen(false)} />
