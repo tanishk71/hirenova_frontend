@@ -1,22 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import API from "../../api/api";
 
-export default function AIChatAssistant({ isOpen: externalIsOpen, setIsOpen: setExternalIsOpen }) {
-  const [internalIsOpen, setInternalIsOpen] = useState(false);
+export default function AIChatAssistant({ initialOpen = false }) {
+  const [isOpen, setIsOpen] = useState(initialOpen);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Sync internal state with external prop
-  useEffect(() => {
-    setInternalIsOpen(externalIsOpen);
-  }, [externalIsOpen]);
-
   const handleToggle = () => {
-    const newState = !internalIsOpen;
-    setInternalIsOpen(newState);
-    setExternalIsOpen?.(newState);
+    setIsOpen(!isOpen);
   };
 
   const scrollToBottom = () => {
@@ -52,29 +45,31 @@ export default function AIChatAssistant({ isOpen: externalIsOpen, setIsOpen: set
   };
 
   return (
-    <div className="border-t border-gray-700/50 pt-4 mt-4">
-      <button
-        onClick={handleToggle}
-        className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 transition-colors w-full"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span className="text-sm font-medium">AI Career Assistant</span>
-        <svg
-          className={`w-4 h-4 ml-auto transition-transform ${internalIsOpen ? "rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+    <div className="flex flex-col h-full">
+      {/* Only show the toggle button if not forced open */}
+      {!initialOpen && (
+        <button
+          onClick={handleToggle}
+          className="flex items-center gap-2 text-gray-400 hover:text-indigo-400 transition-colors w-full mb-2"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="text-sm font-medium">AI Career Assistant</span>
+          <svg
+            className={`w-4 h-4 ml-auto transition-transform ${isOpen ? "rotate-180" : ""}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      )}
 
-      {internalIsOpen && (
-        <div className="mt-3 bg-gray-800/60 rounded-xl border border-gray-700/50 overflow-hidden">
-          {/* chat content unchanged */}
-          <div className="h-80 overflow-y-auto p-3 space-y-3">
+      {(isOpen || initialOpen) && (
+        <div className="flex-1 flex flex-col bg-gray-800/60 rounded-xl border border-gray-700/50 overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-3 space-y-3">
             {messages.length === 0 && (
               <div className="text-center text-gray-500 text-sm py-8">
                 Ask me anything about your career!
